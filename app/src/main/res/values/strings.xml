@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">CargoTrans</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_entrega_carga">EntregaCarga</string>
+    <string name="title_activity_trazabilidad_transporte">TrazabilidadTransporte</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_carga_datos">Carga de Datos</string>
+    <string name="title_activity_incidencias">Incidencias</string>
+    <string-array name="array_Incidencias">
+        <item>Choque</item>
+        <item>Vehículo averiado</item>
+        <item>Desvio de ruta</item>
+
+    </string-array>
+    <string name="title_activity_transporte_gps">Map</string>
+    <string name="title_activity_gps_container">GpsContainer</string>
+    <string name="title_activity_login">CargoTrans</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Usuario</string>
+    <string name="prompt_password">Contraseña </string>
+    <string name="action_sign_in">Ingresar</string>
+    <string name="action_sign_in_short">CargoTrans</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_gps_transporte">Map</string>
+    <string name="title_activity_gps_trans">GpsTrans</string>
+</resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.android.cargotranport.EntregaCarga"
+    tools:showIn="@layout/activity_entrega_carga">
+
+    <Spinner
+        android:id="@+id/cboCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
+
+    <ListView
+        android:id="@+id/lstDatos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cboCliente"
+        android:visibility="gone"></ListView>
+
+    <TextView
+        android:id="@+id/txtComent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lstDatos"
+        android:text="Comentario" />
+
+    <EditText
+        android:id="@+id/etxtComent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/txtComent" />
+
+    <Button
+        android:id="@+id/btnGrabar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etxtComent"
+        android:text="Guardar"
+        android:onClick="venta1"/>
+
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/etxtComent"
+        android:text="Cancelar"
+        android:onClick="venta2"/>
+
+</RelativeLayout>
