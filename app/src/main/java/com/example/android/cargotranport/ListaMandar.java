@@ -4,15 +4,39 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-//import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
+
+
+import java.util.ArrayList;
+
+
+import com.example.android.cargotranport.Adapter.TableAdapter;
+import com.example.android.cargotranport.Entity.TableItem;
+
 
 public class ListaMandar extends AppCompatActivity {
 
+    private ArrayList<TableItem> mItemToSyncList;
+    private RecyclerView mPeopleRecyclerView;
+    private RecyclerView.Adapter mToSyncAdapter;
+
+   //private SyncModel mSyncModel;
+    //SyncDataSenderAsyncTask mAsyncPostToServer;
+
+    private TextView mActionBarTitleTextView;
+    private TextView mActionBarSubtitleTextView;
+
+    //private String mExceptionString;
+    //private List<String> mJsonResultString;
+    //private List<Images_Requerimiento> lista;
 
     private FloatingActionButton mFloatingActionButton;
 
@@ -20,12 +44,21 @@ public class ListaMandar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_mandar);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.end_sync_start_floatingbutton);
+        createActionBar();
+        initializeData();
+        //mAsyncPostToServer = new SyncDataSenderAsyncTask();
+        mToSyncAdapter = new TableAdapter(mItemToSyncList);
+
+        mPeopleRecyclerView = (RecyclerView) findViewById(R.id.rcvListaMandar);
+        mPeopleRecyclerView.setHasFixedSize(true);
+        mPeopleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mPeopleRecyclerView.setAdapter(mToSyncAdapter);
+
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fabListaMandar);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //initializeData();
                 checkStateSynchronization();
 
             }
@@ -74,4 +107,28 @@ public class ListaMandar extends AppCompatActivity {
         builder.show();
     }
 
+    private void createActionBar() {
+        ActionBar mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+
+        View mCustomView = mInflater.inflate(R.layout.actionbar_main, null);
+        mActionBarTitleTextView = (TextView) mCustomView.findViewById(R.id.txt_title);
+        mActionBarTitleTextView.setText("Sincronizar a BD");
+
+        mActionBarSubtitleTextView = (TextView) mCustomView.findViewById(R.id.txt_subtitle);
+        mActionBarSubtitleTextView.setText("CargoTrasport");
+
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+    }
+
+    public void initializeData() {
+        mItemToSyncList = new ArrayList<>();
+        mItemToSyncList.add(new TableItem("Productos Detalle"));
+        mItemToSyncList.add(new TableItem("Incidencias"));
+        mItemToSyncList.add(new TableItem("Imagenes"));
+
+    }
 }

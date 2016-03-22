@@ -3,6 +3,60 @@ package com.example.android.cargotranport;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+/*
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
+*/
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.List;
+/*
+import pe.cosmo.oli.adapter.OnCloseDialogFragmentListener;
+import pe.cosmo.oli.adapter.OnSelectSpinnerItemListener;
+import pe.cosmo.oli.adapter.Selectable;
+import pe.cosmo.oli.client.BlueShipClient;
+import pe.cosmo.oli.client.listener.GetFromServerListener;
+import pe.cosmo.oli.client.listener.OnLoginListener;
+import pe.cosmo.oli.common.SessionManager;
+import pe.cosmo.oli.model.AuthenticationModel;
+import pe.cosmo.oli.pe.cosmo.oli.entity.OperationType;
+import pe.cosmo.oli.pe.cosmo.oli.entity.Project;
+import pe.cosmo.oli.ui.fragment.CustomSpinnerFragment;
+*/
+/*
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -37,24 +91,24 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
- */
+
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * Id to identity READ_CONTACTS permission request.
-     */
+
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
-     */
+
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
-     */
+
     private UserLoginTask mAuthTask = null;
 
     // UI references.
@@ -127,7 +181,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * Callback received when a permissions request has been completed.
-     */
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -143,7 +197,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
-     */
+
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
@@ -203,7 +257,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * Shows the progress UI and hides the login form.
-     */
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
@@ -294,7 +348,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
-     */
+
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
@@ -350,4 +404,222 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 }
+*/
+
+/**
+ * A login screen that offers login via email/password.
+ */
+public class LoginActivity extends AppCompatActivity {
+
+    // private AuthenticationModel mAuthenticationModel;
+
+    /**
+     * Keep track of the login task to ensure we can cancel it if requested.
+     */
+    //private UserLoginTask mAuthTask = null;
+
+    // UI references.
+    private EditText mUsernameView;
+    private EditText mPasswordView;
+    private View mProgressView;
+    private View mLoginFormView;
+    private TextView mActionBarTitleTextView;
+    private TextView mActionBarSubtitleTextView;
+
+    // private CustomSpinnerFragment mSpinnerFragment;
+    private Button mOperationTypeButton;
+    private Button mProjectButton;
+
+    private boolean isWorking = false;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        //BlueShipClient.HOST = "192.168.0.168";
+        //lecturaConfig();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        //showAlertDialog(getBaseContext(), "Servidor", BlueShipClient.HOST.toString(), true, null);
+        //showAlertDialog(getBaseContext(), "Conexion", BlueShipClient.WEB_APP.toString(), true, null);
+        createActionBar();
+
+        //mAuthenticationModel = AuthenticationModel.getInstance();
+        mLoginFormView = findViewById(R.id.login_form); // ???
+        mProgressView = findViewById(R.id.login_progressbar);
+        mUsernameView = (EditText) findViewById(R.id.email);
+        mPasswordView = (EditText) findViewById(R.id.password);
+        mProjectButton = (Button) findViewById(R.id.email_sign_in_button);
+        //mOperationTypeButton = (Button) findViewById(R.id.login_operation_type_button);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    private void createActionBar() {
+        ActionBar mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+
+        View mCustomView = mInflater.inflate(R.layout.actionbar_main, null);
+        mActionBarTitleTextView = (TextView) mCustomView.findViewById(R.id.txt_title);
+        mActionBarTitleTextView.setText("CargoTransport - v1.0");
+
+        mActionBarSubtitleTextView = (TextView) mCustomView.findViewById(R.id.txt_subtitle);
+        mActionBarSubtitleTextView.setText("Ingresar al sistema");
+
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+
+    }
+    public void onLoginButtonClicked(View v) {
+        attemptLogin();
+    }
+    @Override
+    public void onBackPressed() {
+        if (isWorking) return;
+        super.onBackPressed();
+    }
+
+    private void attemptLogin() {
+        mUsernameView.setError(null);
+        mPasswordView.setError(null);
+
+        String username = mUsernameView.getText().toString().trim();
+        if (StringUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            mUsernameView.requestFocus();
+            return;
+        }
+
+        String password = mPasswordView.getText().toString().trim();
+        if (StringUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_empty_password));
+            mPasswordView.requestFocus();
+            return;
+        }
+
+        if (!isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            mPasswordView.requestFocus();
+            return;
+        }
+
+        showProgress(true);
+        //showAlertDialog(getBaseContext(), "Servidor", BlueShipClient.HOST.toString(), true, null);
+        // mAuthenticationModel.doLogin(username, password, mDoLoginResponseListener, mErrorListener);
+        Intent intent = new Intent(getApplicationContext(), EntregaCarga.class);
+        startActivity(intent);
+    }
+
+
+    private void showAlertDialog(Context context, String title, String message, Boolean status, final Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setIcon((status) ? R.drawable.success : R.drawable.fail);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (activity != null) {
+                    activity.finish();
+                }
+            }
+        });
+        builder.create();
+        builder.show();
+    }
+
+    /**
+     * Attempts to sign in or register the account specified by the login form.
+     * If there are form errors (invalid email, missing fields, etc.), the
+     * errors are presented and no actual login attempt is made.
+     */
+
+    private boolean isPasswordValid(String password) {
+        return password.length() > 4;
+    }
+
+    /**
+     * Shows the progress UI and hides the login form.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        isWorking = show;
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Login Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.android.cargotranport/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Login Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.android.cargotranport/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
+}
+
 

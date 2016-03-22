@@ -30,4 +30,5 @@
     </string>
     <string name="title_activity_gps_transporte">Map</string>
     <string name="title_activity_gps_trans">GpsTrans</string>
+    <string name="error_empty_password">Ingrese Password</string>
 </resources>
