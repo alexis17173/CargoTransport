@@ -5,7 +5,7 @@
     <string name="title_activity_trazabilidad_transporte">TrazabilidadTransporte</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_carga_datos">Carga de Datos</string>
-    <string name="title_activity_incidencias">Incidencias</string>
+    <string name="title_activity_incidencias">Incidencia</string>
     <string-array name="array_Incidencias">
         <item>Choque</item>
         <item>Vehículo averiado</item>
@@ -23,12 +23,13 @@
     <string name="action_sign_in_short">CargoTrans</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="error_incorrect_password">Contraseña Incorecta</string>
+    <string name="error_field_required">Ingrese Usuario</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
     <string name="title_activity_gps_transporte">Map</string>
     <string name="title_activity_gps_trans">GpsTrans</string>
     <string name="error_empty_password">Ingrese Password</string>
+    <string name="title_activity_editar_carga">EditarCarga</string>
 </resources>

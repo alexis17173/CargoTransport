@@ -17,49 +17,26 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.example.android.cargotranport.EntregaCarga"
         tools:showIn="@layout/activity_entrega_carga">
-
-        <Spinner
-            android:id="@+id/cboCliente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
-
-        <ListView
-            android:id="@+id/lstDatos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cboCliente"
-            android:visibility="gone"></ListView>
-
-        <TextView
-            android:id="@+id/txtComent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lstDatos"
-            android:text="Comentario" />
-
-        <EditText
-            android:id="@+id/etxtComent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/txtComent" />
-
+<LinearLayout
+    android:layout_width="350dp"
+    android:layout_height="70dp"
+    android:id="@+id/layout_cliente">
         <Button
-            android:id="@+id/btnGrabar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/etxtComent"
-            android:onClick="venta1"
-            android:text="Guardar" />
-
-        <Button
-            android:id="@+id/btnCancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/etxtComent"
-            android:onClick="venta2"
-            android:text="Cancelar" />
-
+            android:id="@+id/btnClient"
+            android:background="@drawable/spinner_button_selector"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:textColor="@color/cardview_light_background"
+            android:onClick="onSpinnerClicked"
+            android:drawableRight="@drawable/dropdown"
+            android:text="Seleccione Cliente"/>
+    </LinearLayout>
+        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/rcvListaDatos"
+            android:layout_below="@+id/layout_cliente"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
